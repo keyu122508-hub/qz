@@ -16,7 +16,7 @@ function base64ToUtf8(b64: string): string {
 async function inflate(data: Uint8Array): Promise<Uint8Array> {
   const ds = new DecompressionStream('deflate-raw')
   const writer = ds.writable.getWriter()
-  writer.write(data); writer.close()
+  writer.write(data as Uint8Array<ArrayBuffer>); writer.close()
   const chunks: Uint8Array[] = []
   const reader = ds.readable.getReader()
   for (;;) { const { done, value } = await reader.read(); if (done) break; chunks.push(value) }
